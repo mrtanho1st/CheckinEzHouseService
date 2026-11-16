@@ -359,7 +359,7 @@ int main(int argc, char* argv[]) {
     });
 
     std::cout << "[INFO] Server started and listening on http://" << host << ":" << port << "\n";
-    std::cout << "[INFO] Ready to receive requests from ngrok or clients!\n";
+    std::cout << "[INFO] Ready to receive HTTP requests from clients!\n";
 
     if (!svr.listen(host.c_str(), port)) {
         std::cerr << "[ERROR] Failed to start HTTP server on " << host << ":" << port << std::endl;

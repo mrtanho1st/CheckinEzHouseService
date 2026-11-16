@@ -1,8 +1,9 @@
-.git
-.gitignore
-build/
-*.pyc
-__pycache__
-.vscode/
-.idea/
-
+**
+!Dockerfile
+!CMakeLists.txt
+!src/
+!src/**
+!include/
+!include/**
+!models/
+!models/*.onnx

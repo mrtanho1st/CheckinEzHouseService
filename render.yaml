@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: yunet-service
+    runtime: docker
+    plan: free
+    region: singapore
+    rootDir: FaceDetect_service
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+    autoDeployTrigger: off
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: HOST
+        value: "0.0.0.0"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"

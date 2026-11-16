@@ -1,0 +1,6 @@
+.playwright-mcp/
+.deploy/
+**/.env
+**/.env.*
+**/build/
+**/__pycache__/

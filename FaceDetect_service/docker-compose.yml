@@ -1,50 +1,19 @@
-
 services:
   yunet-service:
     build:
       context: .
       dockerfile: Dockerfile
-
     image: yunet-face-service:latest
-    container_name: yunet-face-service
     restart: unless-stopped
-
     ports:
       - "8085:8080"
-
     environment:
-      - PORT=8080
-      - HOST=0.0.0.0
-      - MODEL_PATH=/app/models/face_detection_yunet_2023mar.onnx
-      - SCORE_THRESHOLD=0.6
-      - NMS_THRESHOLD=0.3
-
-      # Giới hạn số thread của thư viện tính toán
-      - OMP_NUM_THREADS=1
-      - OPENBLAS_NUM_THREADS=1
-
-    # Giới hạn tài nguyên container
+      PORT: "8080"
+      HOST: "0.0.0.0"
+      MODEL_PATH: /app/models/face_detection_yunet_2023mar.onnx
+      SCORE_THRESHOLD: "0.6"
+      NMS_THRESHOLD: "0.3"
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
     cpus: 1.0
     mem_limit: 512m
-
-  # Ngrok tunnel
-  ngrok:
-    image: ngrok/ngrok:latest
-    container_name: yunet-ngrok
-    restart: unless-stopped
-
-    depends_on:
-      - yunet-service
-
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-
-    command:
-      - "http"
-      - "yunet-service:8080"
-
-    ports:
-      - "4040:4040"
-
-    profiles:
-      - with-ngrok
