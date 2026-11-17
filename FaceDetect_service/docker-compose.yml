@@ -26,25 +26,3 @@ services:
     # Giới hạn tài nguyên container
     cpus: 1.0
     mem_limit: 512m
-
-  # Ngrok tunnel
-  ngrok:
-    image: ngrok/ngrok:latest
-    container_name: yunet-ngrok
-    restart: unless-stopped
-
-    depends_on:
-      - yunet-service
-
-    environment:
-      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN}
-
-    command:
-      - "http"
-      - "yunet-service:8080"
-
-    ports:
-      - "4040:4040"
-
-    profiles:
-      - with-ngrok

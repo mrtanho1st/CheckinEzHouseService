@@ -100,7 +100,7 @@ Service nhận diện khuôn mặt thời gian thực sử dụng mô hình **Yu
    cd FaceDetect_service
    docker compose build yunet-service 
    hoặc
-   docker compose build --no-cache yunet-service .
+   docker compose build --no-cache yunet-service
    ```
 
 2. **Chạy container:**
@@ -108,17 +108,12 @@ Service nhận diện khuôn mặt thời gian thực sử dụng mô hình **Yu
    docker compose up -d yunet-service
    ```
 
-3. **Chạy ngrok:**
+3. **Build và chạy:**
    ```bash
-   docker compose --profile with-ngrok up -d
+   docker compose up -d --build yunet-service
    ```
 
-4. **Build và chạy:**
-   ```bash
-   docker compose --profile with-ngrok up -d --build
-   ```
-
-5. **Kiểm tra trạng thái:**
+4. **Kiểm tra trạng thái:**
    ```bash
    curl.exe http://localhost:8085/health
    ```
@@ -130,53 +125,25 @@ Service nhận diện khuôn mặt thời gian thực sử dụng mô hình **Yu
      "engine": "C++ OpenCV FaceDetectorYN"
    }
    ```
-6. **Chạy thử một ảnh**
+5. **Chạy thử một ảnh**
   ```Bash
   curl.exe -X POST "http://localhost:8085/detect" -F "file=@author.jpg"
   ```
 ---
 
-### Cách 2: Triển khai kèm Ngrok qua Docker Compose
-
-Nếu muốn ngrok tự động chạy kèm trong Docker Compose:
-
-1. Thiết lập token ngrok (lấy miễn phí tại [dashboard.ngrok.com](https://dashboard.ngrok.com/)):
-   - **Linux / macOS:**
-     ```bash
-     export NGROK_AUTHTOKEN="your_token_here"
-     ```
-   - **Windows (PowerShell):**
-     ```powershell
-     $env:NGROK_AUTHTOKEN="your_token_here"
-     ```
-
-2. Khởi chạy cả service và ngrok tunnel:
-   ```bash
-   docker compose --profile with-ngrok up -d
-   ```
-
-3. Xem đường dẫn công khai (Public URL):
-   - Mở trình duyệt vào `http://localhost:4040` (Dashboard của ngrok).
-   - Hoặc lấy nhanh bằng lệnh:
-     ```bash
-     curl -s http://localhost:4040/api/tunnels | grep -o 'https://[^"]*ngrok-free.app'
-     ```
-
----
-
-### Cách 3: Chạy ngrok cài trên máy trỏ vào Docker
+### Cách 2: Chạy ngrok cài trên máy trỏ vào Docker
 
 Nếu bạn đã có sẵn ngrok trên máy tính:
 1. Khởi động Docker service trên cổng 8085:
    ```bash
-   docker run -d -p 8085:8080 yunet-service
+   docker compose up -d yunet-service
    ```
 2. Mở terminal chạy lệnh:
    ```bash
-   ngrok http 8080
+   ngrok http 8085
    ```
 3. Ngrok sẽ cấp đường dẫn dạng:
-   `Forwarding https://abc1-23-45.ngrok-free.app -> http://localhost:8580`
+   `Forwarding https://abc1-23-45.ngrok-free.app -> http://localhost:8085`
 
 ---
 
